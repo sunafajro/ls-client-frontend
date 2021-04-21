@@ -1,10 +1,12 @@
 import './App.css';
 import { Alert } from 'react-bootstrap';
-
+import { NavBar } from './components/NavBar';
 function App() {
-  return (
+    const tabs = ['Главная', 'Профиль', 'Оплаты', 'Занятия', 'Аттестации', 'Сообщения', 'Настройки'];
+
+    return (
     <div className="container-fluid">
-        <Alert variant="warning">Добавить какой нибудь компонент...</Alert>
+        <NavBar tabs={tabs} active="Главная"/>
     </div>
   );
 }
