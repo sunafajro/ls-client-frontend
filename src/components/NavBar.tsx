@@ -1,7 +1,7 @@
 import React from 'react';
-
+import {TabDescriptor} from "../Router";
 export interface NavBarProps {
-    tabs: string[];
+    tabs: TabDescriptor[];
     active: string;
 }
 
@@ -23,22 +23,22 @@ export class NavBar extends React.Component<NavBarProps> {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                        {this.props.tabs.map(x => x === this.props.active ? this.getActiveElement(x) : this.getElement(x))}
+                        {this.props.tabs.map(x => x.caption === this.props.active ? this.getActiveElement(x) : this.getElement(x))}
                     </ul>
                 </div>
             </div>
         </nav>
     }
 
-    private getActiveElement(caption: string) {
+    private getActiveElement(tab: TabDescriptor) {
         return <li className="nav-item">
-            <a className="nav-link active" aria-current="page" href="#">{caption}</a>
+            <a className="nav-link active" aria-current="page" href={tab.path}>{tab.caption}</a>
         </li>;
     }
 
-    private getElement(caption: string) {
+    private getElement(tab: TabDescriptor) {
         return <li className="nav-item">
-            <a className={"nav-link"} href="#">{caption}</a>
+            <a className={"nav-link"} href={tab.path}>{tab.caption}</a>
         </li>;
     }
 }
