@@ -1,12 +1,8 @@
 import './App.css';
-import {Router} from "./Router";
+import { Router } from './Router';
 
 function App() {
-    return (
-        <div className="container-fluid">
-            <Router main="Главная"/>
-        </div>
-    );
+    return <Router />;
 }
 
 export default App;
