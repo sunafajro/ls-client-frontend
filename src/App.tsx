@@ -1,12 +1,12 @@
 import './App.css';
-import { Alert } from 'react-bootstrap';
+import {Router} from "./Router";
 
 function App() {
-  return (
-    <div className="container-fluid">
-        <Alert variant="warning">Добавить какой нибудь компонент...</Alert>
-    </div>
-  );
+    return (
+        <div className="container-fluid">
+            <Router main="Главная"/>
+        </div>
+    );
 }
 
 export default App;
