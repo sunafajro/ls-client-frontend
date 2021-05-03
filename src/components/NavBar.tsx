@@ -1,5 +1,5 @@
 import React from 'react';
-import {TabDescriptor} from "../Router";
+import {TabDescriptor} from "./Router";
 export interface NavBarProps {
     tabs: TabDescriptor[];
     active: string;
