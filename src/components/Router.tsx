@@ -1,4 +1,3 @@
-
 import React from 'react';
 import {
     BrowserRouter,
@@ -6,15 +5,15 @@ import {
     Route,
     Redirect,
 } from 'react-router-dom';
-import { Container } from 'react-bootstrap';
-import { Home } from './pages/Home';
-import { Profile } from './pages/Profile';
-import { Payments } from './pages/Payments';
-import { Courses } from './pages/Courses';
-import { Grades } from './pages/Grades';
-import { Messages } from './pages/Messages';
-import { Settings } from './pages/Settings';
-import { Navigation } from './components/Navigation';
+import {Container} from 'react-bootstrap';
+import {Home} from '../pages/Home';
+import {Profile} from '../pages/Profile';
+import {Payments} from '../pages/Payments';
+import {Courses} from '../pages/Courses';
+import {Grades} from '../pages/Grades';
+import {Messages} from '../pages/Messages';
+import {Settings} from '../pages/Settings';
+import {Navigation} from '../components/Navigation';
 
 const routes = [
     {
@@ -59,7 +58,7 @@ export const Router = () => {
         <BrowserRouter>
             <Navigation
                 navigationLinks={routes.map((route) => {
-                    return { label: route.label, path: route.path };
+                    return {label: route.label, path: route.path};
                 })}
             />
             <Container>
@@ -72,7 +71,7 @@ export const Router = () => {
                             render={(props) => <route.component {...props} />}
                         />
                     ))}
-                    <Redirect to={'/'} />
+                    <Redirect to={'/'}/>
                 </Switch>
             </Container>
         </BrowserRouter>
