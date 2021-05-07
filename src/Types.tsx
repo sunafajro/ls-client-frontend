@@ -5,4 +5,8 @@ export type TNavigationLink = {
 
 export type TNavigation = {
     navigationLinks: TNavigationLink[];
-}
+};
+
+export type RouterProps = {
+    isGuest: boolean;
+};

@@ -1,13 +1,27 @@
+import { LOGIN } from '../actionTypes';
+
 type AppState = {
-    main: string;
-}
+    isGuest: boolean;
+};
 
 type AppAction = {
     type: string;
-}
+};
 
-const initialState = {main: "Главная"}
+const initialState = { isGuest: true };
 
-export function appReducer(state: AppState = initialState, action: AppAction): AppState {
-    return state;
+export function appReducer(
+    state: AppState = initialState,
+    action: AppAction
+): AppState {
+    switch (action.type) {
+        case LOGIN: {
+            return {
+                ...state,
+                isGuest: false,
+            };
+        }
+        default:
+            return state;
+    }
 }

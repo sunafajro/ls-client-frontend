@@ -1,11 +1,5 @@
-
 import React from 'react';
-import {
-    BrowserRouter,
-    Switch,
-    Route,
-    Redirect,
-} from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import { Home } from './pages/Home';
 import { Profile } from './pages/Profile';
@@ -15,6 +9,8 @@ import { Grades } from './pages/Grades';
 import { Messages } from './pages/Messages';
 import { Settings } from './pages/Settings';
 import { Navigation } from './components/Navigation';
+import Login from './pages/Login';
+import { RouterProps } from './Types';
 
 const routes = [
     {
@@ -54,7 +50,23 @@ const routes = [
     },
 ];
 
-export const Router = () => {
+export const Router = ({ isGuest }: RouterProps) => {
+    if (isGuest) {
+        return (
+            <BrowserRouter>
+                <Container>
+                    <Switch>
+                        <Route
+                            exact
+                            path={'/login'}
+                            render={(props) => <Login {...props} />}
+                        />
+                        <Redirect to={'/login'} />
+                    </Switch>
+                </Container>
+            </BrowserRouter>
+        );
+    }
     return (
         <BrowserRouter>
             <Navigation
