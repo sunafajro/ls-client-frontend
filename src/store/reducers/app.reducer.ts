@@ -1,6 +1,6 @@
 import { LOGIN } from '../actionTypes';
 
-type AppState = {
+export type AppState = {
     isGuest: boolean;
 };
 

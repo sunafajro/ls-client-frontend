@@ -1,18 +1,30 @@
-import { Provider } from 'react-redux';
-import { History } from "history";
-import { ConnectedRouter } from "connected-react-router";
+import React, { FC, ReactElement } from 'react';
+import { History } from 'history';
+import { connect } from 'react-redux';
+import { ConnectedRouter } from 'connected-react-router';
+import { TRootState } from './store/store';
 import { Router } from './router';
 import './App.css';
 
-type AppProps = {
-    history: History;
+type TStateProps = {
     isGuest: boolean;
 }
+type TOwnProps = {
+    history: History;
+};
 
-const App = ({ history, isGuest }: AppProps) => {
-    return (<ConnectedRouter history={history}>
-        <Router isGuest={isGuest} />
-    </ConnectedRouter>);
-}
+type TProps = TStateProps & {} & TOwnProps;
 
-export default App;
+const mapState = (state: TRootState) => ({
+    isGuest: state.app.isGuest,
+});
+
+const App: FC<TProps> = ({ history, isGuest }): ReactElement => {
+    return (
+        <ConnectedRouter history={history}>
+            <Router isGuest={isGuest} />
+        </ConnectedRouter>
+    );
+};
+
+export default connect<TStateProps, {}, TOwnProps, TRootState>(mapState, {})(App);

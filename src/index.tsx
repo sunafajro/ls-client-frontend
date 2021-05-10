@@ -7,11 +7,9 @@ import { store } from './store/store';
 import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
 
-const rootState = store.getState();
-
 ReactDOM.render(
     <Provider store={store}>
-        <App history={history} isGuest={rootState.app.isGuest} />
+        <App history={history} />
     </Provider>,
     document.getElementById('root')
 );

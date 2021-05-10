@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { FC, ReactElement } from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
-import { Container } from 'react-bootstrap';
 import { Home } from './pages/Home';
 import { Profile } from './pages/Profile';
 import { Payments } from './pages/Payments';
@@ -8,9 +7,13 @@ import { Courses } from './pages/Courses';
 import { Grades } from './pages/Grades';
 import { Messages } from './pages/Messages';
 import { Settings } from './pages/Settings';
-import { Navigation } from './components/Navigation';
+import { Container } from './components/Container';
+import Navigation from './components/Navigation';
 import Login from './pages/Login';
-import { RouterProps } from './Types';
+
+export type TProps = {
+    isGuest: boolean;
+};
 
 const routes = [
     {
@@ -50,7 +53,7 @@ const routes = [
     },
 ];
 
-export const Router = ({ isGuest }: RouterProps) => {
+export const Router: FC<TProps> = ({ isGuest }): ReactElement => {
     if (isGuest) {
         return (
             <BrowserRouter>
