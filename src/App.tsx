@@ -3,12 +3,12 @@ import { History } from 'history';
 import { connect } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import { TRootState } from './store/store';
-import { Router } from './router';
 import './App.css';
+import { Router } from './Router';
 
 type TStateProps = {
     isGuest: boolean;
-}
+};
 type TOwnProps = {
     history: History;
 };
@@ -27,4 +27,7 @@ const App: FC<TProps> = ({ history, isGuest }): ReactElement => {
     );
 };
 
-export default connect<TStateProps, {}, TOwnProps, TRootState>(mapState, {})(App);
+export default connect<TStateProps, {}, TOwnProps, TRootState>(
+    mapState,
+    {}
+)(App);
