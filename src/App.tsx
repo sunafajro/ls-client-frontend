@@ -8,6 +8,7 @@ import { Router } from './Router';
 
 type TStateProps = {
     isGuest: boolean;
+    message: string;
 };
 type TOwnProps = {
     history: History;
@@ -17,12 +18,13 @@ type TProps = TStateProps & {} & TOwnProps;
 
 const mapState = (state: TRootState) => ({
     isGuest: state.app.isGuest,
+    message: state.app.message,
 });
 
-const App: FC<TProps> = ({ history, isGuest }): ReactElement => {
+const App: FC<TProps> = ({ history, isGuest, message }): ReactElement => {
     return (
         <ConnectedRouter history={history}>
-            <Router isGuest={isGuest} />
+            <Router isGuest={isGuest} message={message} />
         </ConnectedRouter>
     );
 };

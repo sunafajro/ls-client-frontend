@@ -1,50 +1,77 @@
 import React, { FC, ReactElement, useState } from 'react';
 import { connect } from 'react-redux';
 import { TRootState } from '../store/store';
-import { login } from '../store/actions';
 import { PasswordInput, TextInput } from '../components/FormInput';
+import { ILoginPayload } from '../store/actionTypes';
+import { ThunkDispatch } from 'redux-thunk';
+import { thunkLogin } from '../store/services/login-service';
+
+type TStateProps = {
+    message: string;
+};
 
 type TDispatchProps = {
-    login: (username: string, password: string) => void
+    login: (payload: ILoginPayload) => void;
 };
 
-type TProps = {} & TDispatchProps & {};
+const mapState = (state: TRootState) => ({
+    message: state.app.message,
+});
 
-const mapDispatch = {
-    login,
+type TProps = TStateProps & TDispatchProps & {};
+
+const mapDispatch = (dispatch: ThunkDispatch<{}, {}, any>): TDispatchProps => {
+    return {
+        login: async ({ username, password }) => {
+            await dispatch(thunkLogin({ username, password }));
+        },
+    };
 };
 
-const Login: FC<TProps> = ({ login }): ReactElement => {
+const Login: FC<TProps> = ({ message, login }): ReactElement => {
     const [username, updateUsername] = useState('');
     const [password, updatePassword] = useState('');
     const [formError, updateFormError] = useState('');
+    const [serverError, updateServerError] = useState('');
+    const [initialState, setInitialState] = useState(true);
+
+    if (!!message && serverError!== message && !initialState) {
+        updateServerError(message);
+    }
 
     const validateForm = () => {
         if (!username) {
             updateFormError('Необходимо заполнить имя пользователя.');
-        }
-        if (!password) {
+        } else if (!password) {
             updateFormError('Необходимо заполнить пароль.');
+        } else {
+            setInitialState(false);
+            updateFormError('');
+            return true;
         }
-
-        return !formError.length;
+        return false;
     };
 
     return (
         <div>
             <h1>Login</h1>
-            {formError ? (
+            {formError && (
                 <div className="alert alert-danger" role="alert">
                     {formError}
                 </div>
-            ) : (
-                ''
+            )}
+            {serverError && (
+                <div className="alert alert-danger server-error" role="alert">
+                    {serverError}
+                </div>
             )}
             <form
                 onSubmit={(e) => {
                     e.preventDefault();
+                    updateServerError('');
+                    setInitialState(true);
                     if (validateForm()) {
-                        login(username, password);
+                        login({ username, password });
                     }
                 }}
             >
@@ -76,4 +103,7 @@ const Login: FC<TProps> = ({ login }): ReactElement => {
     );
 };
 
-export default connect<{}, TDispatchProps, {}, TRootState>(null, mapDispatch)(Login);
+export default connect<TStateProps, TDispatchProps, {}, TRootState>(
+    mapState,
+    mapDispatch
+)(Login);

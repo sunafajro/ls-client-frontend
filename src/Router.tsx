@@ -13,6 +13,7 @@ import Login from './pages/Login';
 
 export type TProps = {
     isGuest: boolean;
+    message: string;
 };
 
 const routes = [
@@ -53,7 +54,7 @@ const routes = [
     },
 ];
 
-export const Router: FC<TProps> = ({ isGuest }): ReactElement => {
+export const Router: FC<TProps> = ({ isGuest, message }): ReactElement => {
     if (isGuest) {
         return (
             <BrowserRouter>

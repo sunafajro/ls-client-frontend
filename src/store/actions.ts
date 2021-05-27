@@ -1,6 +1,27 @@
-import { LOGIN } from './actionTypes';
+import {
+    ILoginErrorResponse,
+    ILoginSuccessResponse,
+    LOGIN_ERROR,
+    LOGIN_SUCCESS,
+} from './actionTypes';
 
-export const login = (username: string, password: string) => ({
-    type: LOGIN,
-    payload: {username, password}
+//TODO refactor
+export type AppAction = ServerAction;
+export type ServerResponse = ILoginErrorResponse | ILoginErrorResponse;
+
+export const loginSuccess = (response: ILoginSuccessResponse) => ({
+    type: LOGIN_SUCCESS,
+    response,
 });
+export type ILoginSuccess = ReturnType<typeof loginSuccess>;
+
+export const loginError = (response: ILoginErrorResponse) => ({
+    type: LOGIN_ERROR,
+    response,
+});
+export type ILoginError = ReturnType<typeof loginError>;
+
+export type ServerAction = {
+    type: string;
+    response: ServerResponse;
+};
