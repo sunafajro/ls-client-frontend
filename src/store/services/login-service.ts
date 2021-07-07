@@ -24,20 +24,18 @@ const endPoint = 'https://api.language-school.ru/client/auth/login';
     }
 );*/
 
-function api(data: ILoginPayload) {
-    return fetch(endPoint, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    }).then(response => {
-        if (response.ok) {
-            return response.json();
-        }
-        return Promise.reject(response.json());
-    });
-}
+export const api = (data: ILoginPayload) => fetch(endPoint, {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+}).then(response => {
+    if (response.ok) {
+        return response.json();
+    }
+    return Promise.reject(response.json());
+});
 
 //todo export type
 
