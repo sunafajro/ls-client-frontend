@@ -1,11 +1,12 @@
 import {
-    ILoginErrorResponse,
+    ICommonResponse,
     ILoginPayload,
-    ILoginSuccessResponse,
-} from '../actionTypes';
+    LoginErrorData,
+    LoginSuccessData,
+} from '../actions/actionTypes';
 import { ThunkAction } from 'redux-thunk';
 import { AnyAction } from 'redux';
-import { login, loginError, loginSuccess } from '../actions';
+import { login, loginError, loginSuccess } from '../actions/actions';
 import { TRootState } from '../store';
 
 const endPoint = 'https://api.language-school.ru/client/auth/login';
@@ -32,9 +33,9 @@ export const thunkLogin = (
     try {
         dispatch(login);
         const response = await api(data);
-        dispatch(loginSuccess(response as ILoginSuccessResponse));
+        dispatch(loginSuccess(response as ICommonResponse<LoginSuccessData>));
     } catch (err) {
-        const error = (await err) as ILoginErrorResponse;
+        const error = (await err) as ICommonResponse<LoginErrorData>;
         console.error('Ошибка:', error);
         dispatch(loginError(error));
     }

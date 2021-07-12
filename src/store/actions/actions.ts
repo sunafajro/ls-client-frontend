@@ -1,15 +1,18 @@
 import {
-    ILoginErrorResponse,
-    ILoginSuccessResponse,
+    ICommonResponse,
     LOGIN,
     LOGIN_ERROR,
     LOGIN_RESET_ERROR_MESSAGE,
     LOGIN_SUCCESS,
+    LoginErrorData,
+    LoginSuccessData,
 } from './actionTypes';
 
 //TODO refactor
 export type AppAction = ServerAction;
-export type ServerResponse = ILoginErrorResponse | ILoginErrorResponse;
+export type ServerResponse =
+    | ICommonResponse<LoginSuccessData>
+    | ICommonResponse<LoginErrorData>;
 
 export const login = () => ({
     type: LOGIN,
@@ -21,13 +24,13 @@ export const loginResetErrorMessage = () => ({
 });
 export type ILoginResetErrorMessage = ReturnType<typeof loginResetErrorMessage>;
 
-export const loginSuccess = (response: ILoginSuccessResponse) => ({
+export const loginSuccess = (response: ICommonResponse<LoginSuccessData>) => ({
     type: LOGIN_SUCCESS,
     response,
 });
 export type ILoginSuccess = ReturnType<typeof loginSuccess>;
 
-export const loginError = (response: ILoginErrorResponse) => ({
+export const loginError = (response: ICommonResponse<LoginErrorData>) => ({
     type: LOGIN_ERROR,
     response,
 });

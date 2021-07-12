@@ -3,8 +3,8 @@ import {
     LOGIN_ERROR,
     LOGIN_RESET_ERROR_MESSAGE,
     LOGIN_SUCCESS,
-} from '../actionTypes';
-import { AppAction, ILoginError } from '../actions';
+} from '../actions/actionTypes';
+import { AppAction, ILoginError } from '../actions/actions';
 
 export type AppState = {
     isGuest: boolean;

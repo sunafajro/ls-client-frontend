@@ -2,10 +2,10 @@ import React, { FC, ReactElement, useState } from 'react';
 import { connect } from 'react-redux';
 import { TRootState } from '../store/store';
 import { PasswordInput, TextInput } from '../components/FormInput';
-import { ILoginPayload } from '../store/actionTypes';
+import { ILoginPayload } from '../store/actions/actionTypes';
 import { ThunkDispatch } from 'redux-thunk';
 import { thunkLogin } from '../store/services/login-service';
-import { loginResetErrorMessage } from '../store/actions';
+import { loginResetErrorMessage } from '../store/actions/actions';
 
 type TStateProps = {
     message: string;
