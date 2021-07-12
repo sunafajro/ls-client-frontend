@@ -11,9 +11,10 @@ import { Container } from './components/Container';
 import Navigation from './components/Navigation';
 import Login from './pages/Login';
 
-export type TProps = {
+type TProps = {
     isGuest: boolean;
     message: string;
+    isFetching: boolean;
 };
 
 const routes = [
@@ -54,7 +55,11 @@ const routes = [
     },
 ];
 
-export const Router: FC<TProps> = ({ isGuest, message }): ReactElement => {
+export const Router: FC<TProps> = ({
+    isGuest,
+    message,
+    isFetching,
+}): ReactElement => {
     if (isGuest) {
         return (
             <BrowserRouter>

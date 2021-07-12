@@ -5,6 +5,7 @@ import { PasswordInput, TextInput } from '../components/FormInput';
 import { ILoginPayload } from '../store/actionTypes';
 import { ThunkDispatch } from 'redux-thunk';
 import { thunkLogin } from '../store/services/login-service';
+import { loginResetErrorMessage } from '../store/actions';
 
 type TStateProps = {
     message: string;
@@ -12,6 +13,7 @@ type TStateProps = {
 
 type TDispatchProps = {
     login: (payload: ILoginPayload) => void;
+    loginResetErrorMessage: () => void;
 };
 
 const mapState = (state: TRootState) => ({
@@ -22,31 +24,35 @@ type TProps = TStateProps & TDispatchProps & {};
 
 const mapDispatch = (dispatch: ThunkDispatch<{}, {}, any>): TDispatchProps => {
     return {
+        loginResetErrorMessage: () => {
+            dispatch(loginResetErrorMessage());
+        },
         login: async ({ username, password }) => {
             await dispatch(thunkLogin({ username, password }));
         },
     };
 };
 
-const Login: FC<TProps> = ({ message, login }): ReactElement => {
+const Login: FC<TProps> = ({
+    message,
+    login,
+    loginResetErrorMessage,
+}): ReactElement => {
     const [username, updateUsername] = useState('');
     const [password, updatePassword] = useState('');
     const [formError, updateFormError] = useState('');
-    const [serverError, updateServerError] = useState('');
-    const [initialState, setInitialState] = useState(true);
 
-    if (!!message && serverError!== message && !initialState) {
-        updateServerError(message);
+    if (!!message && formError !== message) {
+        updateFormError(message);
     }
 
     const validateForm = () => {
+        loginResetErrorMessage();
         if (!username) {
             updateFormError('Необходимо заполнить имя пользователя.');
         } else if (!password) {
             updateFormError('Необходимо заполнить пароль.');
         } else {
-            setInitialState(false);
-            updateFormError('');
             return true;
         }
         return false;
@@ -60,16 +66,9 @@ const Login: FC<TProps> = ({ message, login }): ReactElement => {
                     {formError}
                 </div>
             )}
-            {serverError && (
-                <div className="alert alert-danger server-error" role="alert">
-                    {serverError}
-                </div>
-            )}
             <form
                 onSubmit={(e) => {
                     e.preventDefault();
-                    updateServerError('');
-                    setInitialState(true);
                     if (validateForm()) {
                         login({ username, password });
                     }
