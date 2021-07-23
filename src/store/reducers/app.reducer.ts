@@ -1,14 +1,18 @@
-import { LOGIN } from '../actionTypes';
+import {
+    LOGIN,
+    LOGIN_ERROR,
+    LOGIN_RESET_ERROR_MESSAGE,
+    LOGIN_SUCCESS,
+} from '../actions/actionTypes';
+import { AppAction, ILoginError } from '../actions/actions';
 
 export type AppState = {
     isGuest: boolean;
+    message: string;
+    isFetching: boolean;
 };
 
-type AppAction = {
-    type: string;
-};
-
-const initialState = { isGuest: true };
+const initialState = { isGuest: true, message: '', isFetching: false };
 
 export function appReducer(
     state: AppState = initialState,
@@ -16,12 +20,21 @@ export function appReducer(
 ): AppState {
     switch (action.type) {
         case LOGIN: {
-            return {
-                ...state,
-                isGuest: false,
-            };
+            state = { ...state, isFetching: true };
+            break;
         }
-        default:
-            return state;
+        case LOGIN_SUCCESS: {
+            state = { ...state, isGuest: false, isFetching: false };
+            break;
+        }
+        case LOGIN_ERROR: {
+            const message = (action as ILoginError).response.data.message;
+            state = { ...state, isGuest: true, message, isFetching: false };
+            break;
+        }
+        case LOGIN_RESET_ERROR_MESSAGE:
+            state = { ...state, message: '' };
+            break;
     }
+    return state;
 }
